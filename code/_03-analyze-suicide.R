@@ -11,7 +11,7 @@ load("./temp/US_df.RData")
 
 int <- ymd("2020-03-13")
 beg <- ymd("2020-01-15")
-
+multiterms <- multiterms_day
 
 panA <- multiterm_barplot(
   multiterm_list = multiterms[[1]] %>% filter(hi95 > mean),
@@ -190,4 +190,5 @@ panD <- panD + scale_x_date(
 row1 <- plot_grid(panC, panD, labels = c("A", "B"), ncol = 2)
 row2 <- plot_grid(panA, labels = c("C"), ncol = 1)
 fig <- plot_grid(row1, row2, ncol = 1, rel_heights = c(0.4,0.6))
+save_plot("./output/Fig.pdf", fig, base_width = 9, base_height = 8)
 save_plot("./output/Fig.png", fig, base_width = 9, base_height = 8)
