@@ -2,8 +2,8 @@ library("gtrendR")
 ROOTPATH <- "C:/Users/tcapu/Google Drive/PublicHealthStudies/coronasuicide"
 setwd(ROOTPATH)
 
-files <- dir("C:/Users/tcapu/Google Drive/modules/gtrendR/R", ".R", full.names = T)
-for(f in files) source(f)
+# files <- dir("C:/Users/tcapu/Google Drive/modules/gtrendR/R", ".R", full.names = T)
+# for(f in files) source(f)
 
 
 int <- ymd("2020-03-13")
@@ -32,7 +32,7 @@ multiterms_day <- multi_term_arima(
   kalman = T # If T, impute with Kalman
 )
 
- 
+
 multiterms_week <- multi_term_arima(
 
   ## A folder containing all of your gtrends data
