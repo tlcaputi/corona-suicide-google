@@ -2,8 +2,6 @@ library("gtrendR")
 ROOTPATH <- "C:/Users/tcapu/Google Drive/PublicHealthStudies/coronasuicide"
 setwd(ROOTPATH)
 
-# files <- dir("C:/Users/tcapu/Google Drive/modules/gtrendR/R", ".R", full.names = T)
-# for(f in files) source(f)
 
 
 int <- ymd("2020-03-13")
