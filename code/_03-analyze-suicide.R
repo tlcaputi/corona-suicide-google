@@ -2,14 +2,18 @@ library("gtrendR")
 ROOTPATH <- "C:/Users/tcapu/Google Drive/PublicHealthStudies/coronasuicide"
 setwd(ROOTPATH)
 
+files <- dir("C:/Users/tcapu/Google Drive/modules/gtrendR/R", ".R", full.name = T)
+for(f in files) source(f)
 
+
+# load("./temp/multiterms_week.RData")
 load("./temp/multiterms_day.RData")
-load("./temp/multiterms_week.RData")
 load("./temp/US_df.RData")
 
 int <- ymd("2020-03-13")
 beg <- ymd("2020-01-15")
 multiterms <- multiterms_day
+
 
 panA <- multiterm_barplot(
   multiterm_list = multiterms[[1]] %>% filter(hi95 > mean),
@@ -18,15 +22,15 @@ panA <- multiterm_barplot(
   title = NULL, # If NULL, no Title
   xlab = NULL, # x axis label
   label_df = NA, # Use a two-column dataframe to label the barplot x axis
-  ylab = "Greater than Expected (%)", # y axis label
+  ylab = "Deviation from Expected (%)", # y axis label
   space = 0.8, # space between bars
   barlabel = F,
 
   ## Set a colorscheme
-  colorscheme = "blue",  # Color schemes set in this package "red", 'blue" or "jamaim"
+  colorscheme = "13rw",  # Color schemes set in this package "red", 'blue" or "jamaim"
 
   # ... customize any color using these
-  hicol = NA, # Color of bars
+  hicol = "#87AAB9", # Color of bars
 
   ## Saving arguments
   save = T, # If T, save plot
@@ -35,7 +39,6 @@ panA <- multiterm_barplot(
   height = 3 # Height in inches
 )
 
-panA <- panA + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + coord_cartesian(ylim = c(NA, 1.3))
 
 
 
@@ -63,7 +66,7 @@ panB <- multiterm_spaghetti(
   spaghettialpha = 0.6, # How transparent do you want the spaghetti lines
 
   ## Set a colorscheme
-  colorscheme = "blue",  # Color schemes set in this package "red", 'blue" or "jamaim"
+  colorscheme = "13rw",  # Color schemes set in this package "red", 'blue" or "jamaim"
 
   # ... customize any color using these
   hicol = NA, # Color of US line
@@ -92,7 +95,7 @@ panC <- arima_plot(
   xlab = "Date", # x axis label
   lbreak = "15 day", # Space between x-axis tick marks
   xfmt = date_format("%b %d"), # Format of dates on x axis
-  ylab = "Query Fraction\n(Per 10 Million Searches)", # y axis label
+  ylab = "Query Fraction (Per 10M)", # y axis label
   lwd = 0.6, # Width of the line
   # label = T, # put increase in searches in plot
   # labsize = 0.8, # size of label
@@ -101,7 +104,7 @@ panC <- arima_plot(
 
 
   ## Set a colorscheme
-  colorscheme = "blue",  # Color schemes set in this package "red", 'blue" or "jamaim"
+  colorscheme = "13rw",  # Color schemes set in this package "red", 'blue" or "jamaim"
 
   # ... customize any color using these
   hicol = NA, # Actual line color
@@ -131,14 +134,14 @@ panD <- arima_ciplot(
   xlab = "Date", # x axis label
   lbreak = "6 day", # Space between x-axis tick marks
   xfmt = date_format("%b %d"), # Format of dates on x axis
-  ylab = "Greater than Expected (%)", # y axis label
+  ylab = "Deviation from Expected (%)", # y axis label
   lwd = 1, # Width of the line
   vline = F,
   hline = F,
 
 
   ## Set a colorscheme
-  colorscheme = "blue",  # Color schemes set in this package "red", 'blue" or "jamaim"
+  colorscheme = "13rw",  # Color schemes set in this package "red", 'blue" or "jamaim"
 
   # ... customize any color using these
   hicol = NA, # Actual color
@@ -153,7 +156,6 @@ panD <- arima_ciplot(
   extend = F
 )
 
-panD <- panD + coord_cartesian(xlim = c(ymd(int) + 1, NA))
 
 rawcounts_df <- get_rawcounts(
   df = US_df, # data from run_arima
@@ -172,6 +174,9 @@ rawcounts_df <- get_rawcounts(
 )
 
 
+panA <- panA + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + coord_cartesian(ylim = c(NA, NA))
+
+
 panC <- panC + theme(legend.position = "none")
 s1 <- seq.Date(beg, ymd("2020-04-18"), by = "15 day")
 panC <- panC + scale_x_date(
@@ -179,14 +184,26 @@ panC <- panC + scale_x_date(
     breaks = s1, labels = function(x) ifelse(as.numeric(x - beg) %% 1 != 0, "", format(x, format = "%b %d"))
   )
 
+panD <- panD + coord_cartesian(xlim = c(ymd(int) + 1, NA))
+
 s2 <- seq.Date(ymd(int), ymd("2020-04-12"), by = "6 day")
 panD <- panD + scale_x_date(
     lim = c(min(s2), max(s2)),
     breaks = s2, labels = function(x) ifelse(as.numeric(x - beg) %% 1 != 0, "", format(x, format = "%b %d"))
   )
 
+s2 <- seq(-0.5, 0.25, by=0.25)
+panD <- panD + scale_y_continuous(
+    lim = c(-0.5, 0.25),
+    breaks = s2,
+    labels = function(x) sprintf("%.0f%%", x*100)
+  )
+
+
+write.csv(multiterms[[1]], "./output/multiterms.csv", row.names = F)
+
 row1 <- plot_grid(panC, panD, labels = c("A", "B"), ncol = 2)
 row2 <- plot_grid(panA, labels = c("C"), ncol = 1)
 fig <- plot_grid(row1, row2, ncol = 1, rel_heights = c(0.4,0.6))
-save_plot("./output/Fig.pdf", fig, base_width = 9, base_height = 8)
-save_plot("./output/Fig.png", fig, base_width = 9, base_height = 8)
+save_plot("./output/Fig_v6.pdf", fig, base_width = 9, base_height = 8)
+save_plot("./output/Fig_v6.png", fig, base_width = 9, base_height = 8)
