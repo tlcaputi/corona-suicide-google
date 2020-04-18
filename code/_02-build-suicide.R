@@ -41,11 +41,11 @@ multiterms_day <- multi_term_arima(
   endperiod = T, # End of the end period, if T then end of data
   interrupt = int, # Date for interruption, splitting before and after periods
 
-
   ## Analytical arguments
   bootstrap = T, # Bootstrap CIs
   bootnum = 1000, # Number of bootstraps
   na = "kalman", # If T, impute with Kalman
+  arima.approx = T,
 
   scale = T,
   logit = T,
@@ -62,7 +62,8 @@ US_df <- run_arima(
   geo = "US", # geography you want to use
   kalman = T, # If True, uses Kalman method to impute time series
   rsv = F,
-  periods = c("week")
+  periods = c("week", "month"),
+  maxK = 5
 )
 
 

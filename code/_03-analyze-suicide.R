@@ -30,7 +30,7 @@ panA <- multiterm_barplot(
   colorscheme = "13rw",  # Color schemes set in this package "red", 'blue" or "jamaim"
 
   # ... customize any color using these
-  hicol = "#87AAB9", # Color of bars
+  # hicol = "#87AAB9", # Color of bars
 
   ## Saving arguments
   save = T, # If T, save plot
@@ -205,5 +205,5 @@ write.csv(multiterms[[1]], "./output/multiterms.csv", row.names = F)
 row1 <- plot_grid(panC, panD, labels = c("A", "B"), ncol = 2)
 row2 <- plot_grid(panA, labels = c("C"), ncol = 1)
 fig <- plot_grid(row1, row2, ncol = 1, rel_heights = c(0.4,0.6))
-save_plot("./output/Fig_v6.pdf", fig, base_width = 9, base_height = 8)
-save_plot("./output/Fig_v6.png", fig, base_width = 9, base_height = 8)
+save_plot("./output/Fig_v8.pdf", fig, base_width = 9, base_height = 8)
+save_plot("./output/Fig_v8.png", fig, base_width = 9, base_height = 8)

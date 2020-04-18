@@ -78,5 +78,8 @@ mean(out1$pctdiff, na.rm = T)
 mean(out2$pctdiff, na.rm = T)
 
 
+mean(out2$actual, na.rm = T) / mean(out2$fitted, na.rm = T)
+
+
 
 print("done")
