@@ -173,9 +173,8 @@ rawcounts_df <- get_rawcounts(
   qf_denominator = 10000000 # Denominator of query fractions, should be 10M, do not change
 )
 
-
+# Customize axes for the plots
 panA <- panA + theme(axis.text.x = element_text(angle = 75, hjust = 1)) + coord_cartesian(ylim = c(NA, NA))
-
 
 panC <- panC + theme(legend.position = "none")
 s1 <- seq.Date(beg, ymd("2020-04-18"), by = "15 day")
@@ -192,18 +191,20 @@ panD <- panD + scale_x_date(
     breaks = s2, labels = function(x) ifelse(as.numeric(x - beg) %% 1 != 0, "", format(x, format = "%b %d"))
   )
 
-s2 <- seq(-0.5, 0.25, by=0.25)
+s3 <- seq(-0.5, 0.25, by=0.25)
 panD <- panD + scale_y_continuous(
     lim = c(-0.5, 0.25),
-    breaks = s2,
+    breaks = s3,
     labels = function(x) sprintf("%.0f%%", x*100)
   )
 
 
-write.csv(multiterms[[1]], "./output/multiterms.csv", row.names = F)
-
+# Combine plots
 row1 <- plot_grid(panC, panD, labels = c("A", "B"), ncol = 2)
 row2 <- plot_grid(panA, labels = c("C"), ncol = 1)
 fig <- plot_grid(row1, row2, ncol = 1, rel_heights = c(0.4,0.6))
 save_plot("./output/Fig_v8.pdf", fig, base_width = 9, base_height = 8)
 save_plot("./output/Fig_v8.png", fig, base_width = 9, base_height = 8)
+
+# Save CIs for individual terms
+write.csv(multiterms[[1]], "./output/multiterms.csv", row.names = F)

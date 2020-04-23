@@ -18,22 +18,6 @@ timeline.theo_timeline(
     outpath = "{}/input".format(ROOTPATH),
     creds = "C:/Users/tcapu/Google Drive/modules/gtrendspy/info_mark.py"
 )
-#
-#
-# topterms.theo_timeline_top(
-#         root_terms = ['suicide - squad'], # a list of the root terms you're interested in
-#         num_terms_per_root = 25, # how many additional terms you want per root term
-#         start = '2020-01-15', # the start date
-#         end = '2020-04-15', # the end date
-#         timeframe_list = ['week'], # the timeframe you want
-#         outpath = "{}/input/individual".format(ROOTPATH),
-#         creds = "C:/Users/tcapu/Google Drive/modules/gtrendspy/info_mark.py",
-#         geo_country_list = ['US'], # the region you're interested in. ONLY CHOOSE 1 or None
-#         batch_size = 20,
-#         timestep_years = 1,
-#         get_all = True,
-#         all_path = "{}/input".format(ROOTPATH)
-#         )
 
 rw_terms = [
             '"commit suicide"',
@@ -78,3 +62,20 @@ timeline.theo_timeline(
     outpath = "{}/input/individual".format(ROOTPATH),
     creds = "C:/Users/tcapu/Google Drive/modules/gtrendspy/info_mark.py"
 )
+
+#
+#
+# topterms.theo_timeline_top(
+#         root_terms = ['suicide - squad'], # a list of the root terms you're interested in
+#         num_terms_per_root = 25, # how many additional terms you want per root term
+#         start = '2020-01-15', # the start date
+#         end = '2020-04-15', # the end date
+#         timeframe_list = ['week'], # the timeframe you want
+#         outpath = "{}/input/individual".format(ROOTPATH),
+#         creds = "C:/Users/tcapu/Google Drive/modules/gtrendspy/info_mark.py",
+#         geo_country_list = ['US'], # the region you're interested in. ONLY CHOOSE 1 or None
+#         batch_size = 20,
+#         timestep_years = 1,
+#         get_all = True,
+#         all_path = "{}/input".format(ROOTPATH)
+#         )
